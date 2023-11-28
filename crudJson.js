@@ -2,12 +2,19 @@ window.onload = function () {
     // Hacer una solicitud GET a la API
     fetch('https://restapi-node-production.up.railway.app/api/preguntas')
         .then(response => response.json())
-        .then(data => {
-            console.log(data); // Mostrar la respuesta de la API en la consola
-            mostrarTabla(data); // Llamar a la función para mostrar la tabla con los datos recibidos
+        .then(result => {
+            // Verificar si la solicitud fue exitosa (success:true)
+            if (result.success) {
+                const data = result.data;
+                console.log(data); // Mostrar la respuesta de la API en la consola
+                mostrarTabla(data); // Llamar a la función para mostrar la tabla con los datos recibidos
+            } else {
+                console.error("Error en la solicitud: ", result.message);
+            }
         })
         .catch(error => console.error(error));
 };
+
 
 function eliminarPregunta(id) {
     // Realiza una solicitud DELETE a la API con el ID de la pregunta a eliminar
